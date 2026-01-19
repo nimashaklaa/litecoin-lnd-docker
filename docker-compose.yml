@@ -6,24 +6,22 @@ services:
     container_name: litecoin-lnd
     restart: unless-stopped
     ports:
-      # Lightning P2P port
-      - "9735:9735"
-      # gRPC port
-      - "10009:10009"
-      # REST API port
-      - "8080:8080"
+      - "9735:9735"   # Lightning P2P network
+      - "10009:10009" # gRPC API
+      - "8080:8080"   # REST API
     volumes:
       - lnd-data:/home/lnd/.lnd
       - ./lnd/lnd.conf:/home/lnd/.lnd/lnd.conf:ro
     command:
       - --configfile=/home/lnd/.lnd/lnd.conf
+      # Litecoin node connection settings (from .env file)
       - --litecoind.rpchost=${LITECOIND_RPCHOST}
       - --litecoind.rpcuser=${LITECOIND_RPCUSER}
       - --litecoind.rpcpass=${LITECOIND_RPCPASS}
       - --litecoind.zmqpubrawblock=${LITECOIND_ZMQPUBRAWBLOCK}
       - --litecoind.zmqpubrawtx=${LITECOIND_ZMQPUBRAWTX}
     networks:
-      - node_bitcoin
+      - node_bitcoin  # Connect to Litecoin node's network
 
 volumes:
   lnd-data:
