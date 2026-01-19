@@ -3,15 +3,8 @@ services:
     build:
       context: ./lnd
       dockerfile: Dockerfile
-      args:
-        LND_VERSION: v0.17.5-beta
     container_name: litecoin-lnd
     restart: unless-stopped
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    volumes:
-      - lnd-data:/home/lnd/.lnd
-      - ./lnd/lnd.conf:/home/lnd/.lnd/lnd.conf:ro
     ports:
       # Lightning P2P port
       - "9735:9735"
@@ -19,6 +12,9 @@ services:
       - "10009:10009"
       # REST API port
       - "8080:8080"
+    volumes:
+      - lnd-data:/home/lnd/.lnd
+      - ./lnd/lnd.conf:/home/lnd/.lnd/lnd.conf:ro
     command:
       - --configfile=/home/lnd/.lnd/lnd.conf
       - --litecoind.rpchost=${LITECOIND_RPCHOST}
@@ -27,12 +23,12 @@ services:
       - --litecoind.zmqpubrawblock=${LITECOIND_ZMQPUBRAWBLOCK}
       - --litecoind.zmqpubrawtx=${LITECOIND_ZMQPUBRAWTX}
     networks:
-      - lightning-network
+      - node_bitcoin
 
 volumes:
   lnd-data:
     driver: local
 
 networks:
-  lightning-network:
-    driver: bridge
+  node_bitcoin:
+    external: true

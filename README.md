@@ -26,6 +26,8 @@ A Docker-based setup for running an LND (Lightning Network Daemon) node connecte
 
 ## Quick Start
 
+> 📖 **For detailed setup instructions and testing procedures, see [SETUP_GUIDE.md](SETUP_GUIDE.md)**
+
 ### 1. Clone this repository
 
 ```bash
@@ -162,7 +164,9 @@ litecoin-lnd-node/
 ├── lnd/
 │   ├── Dockerfile        # LND Docker image
 │   └── lnd.conf          # LND configuration
-└── README.md
+├── README.md
+├── SETUP_GUIDE.md        # Complete setup and testing guide
+└── TROUBLESHOOTING.md    # Development notes and issue history
 ```
 
 ## Ports
@@ -172,6 +176,16 @@ litecoin-lnd-node/
 | 9735  | Lightning P2P | Peer-to-peer Lightning Network |
 | 10009 | gRPC          | gRPC API for programmatic use  |
 | 8080  | REST          | REST API                       |
+
+## Important Notes
+
+### LND Version
+This setup uses **ltcsuite/lnd** (Litecoin's official LND fork), not the Bitcoin-focused `lightningnetwork/lnd`. This is required for Litecoin compatibility. See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for details on why and the issues encountered during development.
+
+### Version Compatibility
+- Uses `ltcsuite/lnd` with automatic tag selection (falls back to `v0.14.2-beta`)
+- Built with Go 1.23
+- Compatible with modern Litecoin Core RPC responses
 
 ## Troubleshooting
 
@@ -186,6 +200,13 @@ litecoin-lnd-node/
 
 ### "wallet not found"
 - Run the wallet creation command (see step 4)
+
+### Build or Runtime Errors
+For detailed information about compatibility issues, build errors, and solutions, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md). This document includes:
+- History of attempted solutions
+- Error explanations and root causes
+- Version compatibility notes
+- Recommendations for fixes
 
 ## Security Notes
 
