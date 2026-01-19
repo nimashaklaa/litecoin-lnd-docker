@@ -89,10 +89,8 @@ docker inspect <litecoin-container-name> | grep -A 5 Networks
 ### Step 1: Clone or Navigate to Project
 
 ```bash
-cd ~/litecoin-lnd-node
-# or
-git clone <your-repo-url>
-cd litecoin-lnd-node
+git clone https://github.com/nimashaklaa/litecoin-lnd-docker.git
+cd litecoin-lnd-docker
 ```
 
 ### Step 2: Verify Project Structure
@@ -192,7 +190,7 @@ docker network create node_bitcoin
 ```bash
 # Clean build (recommended for first time)
 docker compose down
-docker volume rm litecoin-lnd-node_lnd-data 2>/dev/null
+docker volume rm litecoin-lnd-docker_lnd-data 2>/dev/null
 docker compose build --no-cache
 ```
 

@@ -31,8 +31,8 @@ A Docker-based setup for running an LND (Lightning Network Daemon) node connecte
 ### 1. Clone this repository
 
 ```bash
-git clone <your-repo-url>
-cd litecoin-lnd-node
+git clone https://github.com/nimashaklaa/litecoin-lnd-docker.git
+cd litecoin-lnd-docker
 ```
 
 ### 2. Configure environment variables
@@ -157,7 +157,7 @@ docker-compose up -d --build
 ## Directory Structure
 
 ```
-litecoin-lnd-node/
+litecoin-lnd-docker/
 ├── docker-compose.yml    # Docker Compose configuration
 ├── .env.example          # Example environment variables
 ├── .env                  # Your actual credentials (git-ignored)
