@@ -1,0 +1,38 @@
+services:
+  lnd:
+    build:
+      context: ./lnd
+      dockerfile: Dockerfile
+      args:
+        LND_VERSION: v0.17.5-beta
+    container_name: litecoin-lnd
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - lnd-data:/home/lnd/.lnd
+      - ./lnd/lnd.conf:/home/lnd/.lnd/lnd.conf:ro
+    ports:
+      # Lightning P2P port
+      - "9735:9735"
+      # gRPC port
+      - "10009:10009"
+      # REST API port
+      - "8080:8080"
+    command:
+      - --configfile=/home/lnd/.lnd/lnd.conf
+      - --litecoind.rpchost=${LITECOIND_RPCHOST}
+      - --litecoind.rpcuser=${LITECOIND_RPCUSER}
+      - --litecoind.rpcpass=${LITECOIND_RPCPASS}
+      - --litecoind.zmqpubrawblock=${LITECOIND_ZMQPUBRAWBLOCK}
+      - --litecoind.zmqpubrawtx=${LITECOIND_ZMQPUBRAWTX}
+    networks:
+      - lightning-network
+
+volumes:
+  lnd-data:
+    driver: local
+
+networks:
+  lightning-network:
+    driver: bridge
